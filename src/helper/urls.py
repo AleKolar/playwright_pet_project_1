@@ -1,0 +1,9 @@
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+BASE_URL = os.getenv("BASE_URL")
+CART_URL = os.getenv("CART_URL")
+LOGIN_URL = os.getenv("LOGIN_URL")

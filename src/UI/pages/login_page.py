@@ -1,0 +1,31 @@
+from playwright.sync_api import Page
+
+from src.UI.page_elements.button import Button
+from src.UI.page_elements.input import Input
+from src.UI.pages.base_pages import BasePage
+from src.helper.email_password import EMAIL, PASSWORD
+from src.helper.urls import LOGIN_URL
+
+
+class LoginPage(BasePage):
+    """Логика для страницы Login."""
+
+    def __init__(self, page: Page):
+        super().__init__(page)
+
+        self.url = LOGIN_URL
+
+        self.email_input = Input(page, stragedy="by_placeholder", value="Введите свою почту")
+
+        self.password_input = Input(page, stragedy="by_placeholder", value="Введите пароль")
+
+        self.login_button = Button(page, stragedy="by_role", role="button", value="Войти")
+
+    def input_email(self):
+        self.email_input.fill_and_check(text=EMAIL)
+
+    def input_password(self):
+        self.password_input.fill_and_check(text=PASSWORD)
+
+    def push_enter(self):
+        self.login_button.click()
