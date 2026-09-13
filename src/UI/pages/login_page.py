@@ -21,11 +21,18 @@ class LoginPage(BasePage):
 
         self.login_button = Button(page, stragedy="by_role", role="button", value="Войти")
 
-    def input_email(self):
+    # def input_email(self):
+    #     self.email_input.fill_and_check(text=EMAIL)
+    #
+    # def input_password(self):
+    #     self.password_input.fill_and_check(text=PASSWORD)
+    #
+    # def push_enter(self):
+    #     self.login_button.click()
+
+    def login(self):
         self.email_input.fill_and_check(text=EMAIL)
-
-    def input_password(self):
         self.password_input.fill_and_check(text=PASSWORD)
-
-    def push_enter(self):
         self.login_button.click()
+
+
