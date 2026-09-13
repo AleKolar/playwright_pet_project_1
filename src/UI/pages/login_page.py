@@ -21,6 +21,8 @@ class LoginPage(BasePage):
 
         self.login_button = Button(page, stragedy="by_role", role="button", value="Войти")
 
+        self.button_is_visible = Button(page, stragedy="by_role", role="button", value="Delete project")
+
     # def input_email(self):
     #     self.email_input.fill_and_check(text=EMAIL)
     #
@@ -34,5 +36,9 @@ class LoginPage(BasePage):
         self.email_input.fill_and_check(text=EMAIL)
         self.password_input.fill_and_check(text=PASSWORD)
         self.login_button.click()
+
+    def check_element(self):
+        self.button_is_visible.check_visibility()
+
 
 
