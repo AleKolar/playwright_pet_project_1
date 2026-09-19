@@ -1,5 +1,6 @@
 from playwright.sync_api import Page
 
+from src.UI.browser.browser import Browser
 from src.UI.page_elements.element import Element
 from src.UI.page_elements.text import Text
 from src.helper.urls import BASE_URL, CART_URL
@@ -11,14 +12,15 @@ class BasePage:
     def __init__(self, page: Page):
         self.page = page
         self.url = BASE_URL
-        self.text_monitor = Text(page, stragedy="by_text", value="Monitors")
-        self.text_apple_monitor = Text(page, stragedy="by_text", value="Apple monitor 24")
-        self.element_card = Element(page, stragedy="locator", selector=".card-block")
-        self.text_card = Text(page, stragedy="locator", selector="#cartur")
+        self.browser = Browser(page)
+        self.text_monitor = Text(page, strategy="by_text", value="Monitors", allure_name="Monitors")
+        self.text_apple_monitor = Text(page, strategy="by_text", value="Apple monitor 24", allure_name="Apple monitor 24")
+        self.element_card = Element(page, strategy="locator", selector=".card-block", allure_name="Карточка товара")
+        self.text_card = Text(page, strategy="locator", selector="#cartur", allure_name="Корзина")
 
     def open(self):
         """Открывает страницу по URL"""
-        return self.page.goto(self.url)
+        return self.browser.go_to_url(self.url)
 
     def monitors(self):
         """Кликает на мониторы"""

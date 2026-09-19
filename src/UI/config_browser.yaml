@@ -1,0 +1,8 @@
+browserType: "chromium"
+
+launch:
+  channel: "chrome"
+  headless: false
+  slow_mo: 500
+
+context:

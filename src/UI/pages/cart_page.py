@@ -11,7 +11,7 @@ class CartPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
         self.url = BASE_URL + CART_URL
-        self.button_is_exist = Button(page, stragedy="by_role", role="button", value="Place Order")
+        self.button_is_exist = Button(page, strategy="by_role", role="button", value="Place Order", allure_name="Place Order")
 
     def check_exist_button(self):
 # Вариант: self.page.get_by_role("button", name="Place Order")

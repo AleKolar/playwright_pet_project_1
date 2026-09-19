@@ -1,40 +1,46 @@
 from abc import ABC
 
+import allure
 from playwright.sync_api import Page, expect
 
 
 class Base(ABC):
     """Базовый класс для взаимодействия с элементами"""
-    def __init__(self, page: Page, stragedy: str = None, selector: str = None,
-                 role = None, value: str = None, id: str = None):
+    def __init__(self, page: Page, strategy: str = None, selector: str = None,
+                 role = None, value: str = None, id: str = None, allure_name: str = None):
         self.page = page
-        self.stragedy = stragedy
+        self.strategy = strategy
         self.selector = selector
         self.role = role
         self.value = value
         self.id = id
+        self.allure_name = allure_name
 
-        if stragedy == "locator":
+        if strategy == "locator":
             self._element = self.page.locator(self.selector)
-        elif stragedy == "by_role":
+        elif strategy == "by_role":
             self._element = self.page.get_by_role(role = self.role, name = self.value)
-        elif stragedy == "by_text":
+        elif strategy == "by_text":
             self._element = self.page.get_by_text(text = self.value)
-        elif self.stragedy == "by_placeholder":
+        elif strategy == "by_placeholder":
             self._element = self.page.get_by_placeholder(text = self.value)
-        elif self.stragedy == "by_test_id":
+        elif strategy == "by_test_id":
             self._element = self.page.get_by_test_id(test_id = id)
-        elif self.stragedy == "by_label":
+        elif strategy == "by_label":
             self._element = self.page.get_by_label(text = self.value)
         else:
             raise ValueError("Указана неверная стратегия")
 
     def get_element(self):
-        """Возвращает локатор элемента"""
+        """Возвращает локатор элемента, когда нужно выйти из фреймворка,
+        чтоб воспользоваться локатором и использовать методы Playwright напрямую,
+        т.е. 'вне класса'"""
         return self._element
 
     def click(self):
-        self._element.click()
+        step_description = (f'Кликнем по элементу "{self.allure_name}"')
+        with allure.step(step_description):
+            self._element.click()
 
     def fill(self, text):
         self._element.fill(text)
@@ -44,14 +50,28 @@ class Base(ABC):
 
     def check_visibility(self, visible=True):
         """Проверка, что элемент действительно виден"""
-        expect(self._element).to_be_visible(visible=visible)
+        if visible:
+            status_element = "Видимый"
+        else:
+            status_element = "Невидимый"
+        step_description = (f'Проверяем видимость {self.allure_name}: "{status_element}"')
+        with allure.step(step_description):
+            expect(self._element).to_be_visible(visible=visible)
+
 
     def wait_for_visibility(self):
         self.check_visibility()
 
     def wait_for_status(self, state, timeout_msec: int = None):
         """Ожидает указанное состояние Locator."""
-        self._element.wait_for(state=state, timeout=timeout_msec)
+        if state == "attached" and state == "visible":
+            status_element = "Видимый"
+        else:
+            status_element = "Невидимый"
+        step_description = (f'Ждём когда элемент {self.allure_name}станет'
+                            f' "{status_element}"')
+        with allure.step(step_description):
+            self._element.wait_for(state=state, timeout=timeout_msec)
 
     """Можно расширить сценарии ожидания. НИЖЕ"""
 

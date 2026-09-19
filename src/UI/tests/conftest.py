@@ -1,6 +1,9 @@
+from pathlib import Path
+
 import pytest
 from playwright.sync_api import sync_playwright
 
+from src.UI.browser.browser_launcher import BrowserLauncher
 from src.UI.pages.base_pages import BasePage
 from src.UI.pages.cart_page import CartPage
 from src.UI.pages.login_page import LoginPage
@@ -19,27 +22,37 @@ from src.UI.pages.login_page import LoginPage
 #     browser.close()
 #     playwright.stop()
 
+config_yaml_page = Path(__file__).parent.parent / "config_browser.yaml"
 
 @pytest.fixture
 def browser():
-    """Создаёт объект Playwright Page и передаёт его в тест.
-    Здесь возникает вопрос, какие именно объекты Playwright являются context manager
-    в твоей установленной версии. Поэтому самый надёжный и при этом чистый вариант
-    для conftest.py — оставить browser/context с явным закрытием"""
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(
-            channel="chrome",
-            headless=False,
-            slow_mo=500
-        )
-        context = browser.new_context(viewport={"width": 800, "height": 600})
+    brwsr = BrowserLauncher(config_yaml_page)
+    new_page = brwsr.create_page() # Например можно передать куки
 
-        page = context.new_page()
+    yield new_page
 
-        yield page
+    brwsr.close()
 
-        context.close()
-        browser.close()
+# @pytest.fixture
+# def page():
+#     """Создаёт объект Playwright Page и передаёт его в тест.
+#     Здесь возникает вопрос, какие именно объекты Playwright являются context manager
+#     в твоей установленной версии. Поэтому самый надёжный и при этом чистый вариант
+#     для conftest.py — оставить browser/context с явным закрытием"""
+#     with sync_playwright() as playwright:
+#         browser = playwright.chromium.launch(
+#             channel="chrome",
+#             headless=False,
+#             slow_mo=500
+#         )
+#         context = browser.new_context(viewport={"width": 800, "height": 600})
+#
+#         page = context.new_page()
+#
+#         yield page
+#
+#         context.close()
+#         browser.close()
 
 @pytest.fixture()
 def base_page(browser):

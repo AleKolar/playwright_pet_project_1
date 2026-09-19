@@ -15,13 +15,13 @@ class LoginPage(BasePage):
 
         self.url = LOGIN_URL
 
-        self.email_input = Input(page, stragedy="by_placeholder", value="Введите свою почту")
+        self.email_input = Input(page, strategy="by_placeholder", value="Введите свою почту", allure_name="Поле для ввода почты")
 
-        self.password_input = Input(page, stragedy="by_placeholder", value="Введите пароль")
+        self.password_input = Input(page, strategy="by_placeholder", value="Введите пароль", allure_name="Поле для ввода пароля")
 
-        self.login_button = Button(page, stragedy="by_role", role="button", value="Войти")
+        self.login_button = Button(page, strategy="by_role", role="button", value="Войти", allure_name="Войти")
 
-        self.button_is_visible = Button(page, stragedy="by_role", role="button", value="Delete project")
+        self.button_is_visible = Button(page, strategy="by_role", role="button", value="Delete project", allure_name="Delete project")
 
     # def input_email(self):
     #     self.email_input.fill_and_check(text=EMAIL)
