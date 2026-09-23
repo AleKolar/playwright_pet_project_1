@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pytest
-from playwright.sync_api import sync_playwright
 
 from src.UI.browser.browser_launcher import BrowserLauncher
 from src.UI.pages.base_pages import BasePage

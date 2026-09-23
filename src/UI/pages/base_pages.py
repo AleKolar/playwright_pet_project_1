@@ -1,6 +1,8 @@
 from playwright.sync_api import Page
 
 from src.UI.browser.browser import Browser
+from src.UI.page_elements.Link import Link
+from src.UI.page_elements.button import Button
 from src.UI.page_elements.element import Element
 from src.UI.page_elements.text import Text
 from src.helper.urls import BASE_URL, CART_URL
@@ -17,6 +19,9 @@ class BasePage:
         self.text_apple_monitor = Text(page, strategy="by_text", value="Apple monitor 24", allure_name="Apple monitor 24")
         self.element_card = Element(page, strategy="locator", selector=".card-block", allure_name="Карточка товара")
         self.text_card = Text(page, strategy="locator", selector="#cartur", allure_name="Корзина")
+        self.text_title = Text(page, strategy="by_text", value="CATEGORIES", allure_name="Категории")
+        self.link_phones = Link(page, strategy="by_role", role="link", value="Phones", allure_name="Phones")
+        self.phone_card = Link(page, strategy="by_role", role="link", value="Samsung galaxy s6", allure_name="Samsung galaxy s6")
 
     def open(self):
         """Открывает страницу по URL"""
@@ -42,3 +47,21 @@ class BasePage:
         """Переход на страницу корзины"""
         self.text_card.click()
         assert CART_URL in self.page.url
+
+    def check_title(self):
+        """Проверяем наличие заголовка"""
+        self.text_title.check_visibility()
+
+    def check_button_is_enabled(self):
+        """Проверяем, что кнопка активна"""
+        self.link_phones.check_enabled()
+
+    def open_phones_category(self):
+        """Открывает категорию Phones"""
+        self.link_phones.click()
+
+    def check_phones_category(self):
+        """Проверяет, что открыта категория Phones"""
+        self.phone_card.check_visibility()
+
+
