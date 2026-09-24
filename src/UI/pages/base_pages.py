@@ -22,6 +22,7 @@ class BasePage:
         self.text_title = Text(page, strategy="by_text", value="CATEGORIES", allure_name="Категории")
         self.link_phones = Link(page, strategy="by_role", role="link", value="Phones", allure_name="Phones")
         self.phone_card = Link(page, strategy="by_role", role="link", value="Samsung galaxy s6", allure_name="Samsung galaxy s6")
+        self.all_phone_cards = Element(page, strategy="locator", selector="#tbodyid .card-block:visible", allure_name="Карточки телефонов")
 
     def open(self):
         """Открывает страницу по URL"""
@@ -56,12 +57,19 @@ class BasePage:
         """Проверяем, что кнопка активна"""
         self.link_phones.check_enabled()
 
-    def open_phones_category(self):
-        """Открывает категорию Phones"""
-        self.link_phones.click()
-
     def check_phones_category(self):
         """Проверяет, что открыта категория Phones"""
         self.phone_card.check_visibility()
+
+    def phones(self):
+        """Открывает категорию Phones"""
+        self.link_phones.click()
+        self.phone_card.check_visibility()
+
+
+
+
+
+
 
 

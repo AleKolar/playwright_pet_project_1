@@ -6,7 +6,7 @@ from src.UI.browser.browser_launcher import BrowserLauncher
 from src.UI.pages.base_pages import BasePage
 from src.UI.pages.cart_page import CartPage
 from src.UI.pages.login_page import LoginPage
-
+from src.UI.pages.phones_page import PhonesPage
 
 # @pytest.fixture
 # def browser():
@@ -64,3 +64,7 @@ def cart_page(browser):
 @pytest.fixture()
 def login_page(browser):
     return LoginPage(browser)
+
+@pytest.fixture()
+def phones_page(browser):
+    return PhonesPage(browser)

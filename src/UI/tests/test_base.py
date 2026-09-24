@@ -27,7 +27,7 @@ class TestBasePage:
     @allure.title("Проверка перехода в категорию 'Phones'")
     def test_phones_category(self, base_page):
         base_page.open()
-        base_page.open_phones_category()
+        base_page.phones()
         base_page.check_phones_category()
 
 # pytest -s -v src/UI/tests/test_base.py
