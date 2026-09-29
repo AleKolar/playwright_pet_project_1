@@ -5,8 +5,11 @@ import pytest
 from src.UI.browser.browser_launcher import BrowserLauncher
 from src.UI.pages.base_pages import BasePage
 from src.UI.pages.cart_page import CartPage
+from src.UI.pages.laptops_page import LaptopsPage
 from src.UI.pages.login_page import LoginPage
+from src.UI.pages.monitors_page import MonitorsPage
 from src.UI.pages.phones_page import PhonesPage
+from src.UI.pages.product_page import ProductPage
 
 # @pytest.fixture
 # def browser():
@@ -68,3 +71,15 @@ def login_page(browser):
 @pytest.fixture()
 def phones_page(browser):
     return PhonesPage(browser)
+
+@pytest.fixture()
+def laptops_page(browser):
+    return LaptopsPage(browser)
+
+@pytest.fixture()
+def monitors_page(browser):
+    return MonitorsPage(browser)
+
+@pytest.fixture()
+def product_page(browser):
+    return ProductPage(browser)

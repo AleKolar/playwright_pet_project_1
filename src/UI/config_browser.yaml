@@ -3,6 +3,6 @@ browserType: "chromium"
 launch:
   channel: "chrome"
   headless: false
-  slow_mo: 500
+  slow_mo: 1000
 
 context:
