@@ -25,7 +25,7 @@ class Base(ABC):
         elif strategy == "by_placeholder":
             self._element = self.page.get_by_placeholder(text = self.value)
         elif strategy == "by_test_id":
-            self._element = self.page.get_by_test_id(test_id = id)
+            self._element = self.page.get_by_test_id(test_id = self.value)
         elif strategy == "by_label":
             self._element = self.page.get_by_label(text = self.value)
         else:
@@ -42,8 +42,10 @@ class Base(ABC):
         with allure.step(step_description):
             self._element.click()
 
-    def fill(self, text):
-        self._element.fill(text)
+    def fill(self, text: str):
+        """Обычный ввод — значение видно в отчёте (логины, поисковые запросы)"""
+        with allure.step(f'Заполнить "{self.allure_name}" значением "{text}"'):
+            self._element.fill(text)
 
     def is_visible(self):
         return self._element.is_visible()
