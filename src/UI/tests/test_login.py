@@ -24,9 +24,3 @@ class TestLogintPage:
 
 # pytest -s -v src/UI/tests/test_login.py
 
-# pytest -s -v --alluredir=allure_result src/UI/tests/test_login.py
-
-# pytest -s -v --alluredir=allure_result
-
-# # Запускаем allure через Python
-# python -m allure serve allure_result

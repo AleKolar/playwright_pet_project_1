@@ -64,7 +64,7 @@ class Base(ABC):
 
     def wait_for_status(self, state, timeout_msec: int = None):
         """Ожидает указанное состояние Locator."""
-        if state == "attached" and state == "visible":
+        if state == "attached" or state == "visible":
             status_element = "Видимый"
         else:
             status_element = "Невидимый"
